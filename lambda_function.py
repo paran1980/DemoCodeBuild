@@ -8,6 +8,7 @@ def lambda_handler(event,context):
     location = event['landmark']
     PARAMS = {'address': location}
     print(PARAMS)
+    print(location)
     r = requests.get(url= URL,
                      params = PARAMS)
     data = r.json()
