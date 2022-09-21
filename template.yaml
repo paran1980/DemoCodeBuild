@@ -1,0 +1,29 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Outputs the time
+
+Parameters:
+  CodeDeployRole:
+    Type: String
+    Description:  IAM role to allow AWS CodeDeploy to manage deployment of AWS Lambda functions
+
+Globals:
+  Function:
+    AutoPublishAlias: live
+    DeploymentPreference:
+      Enabled: True
+      Type: Canary10Percent5Minutes
+      Role: !Ref CodeDeployRole
+
+Resources:
+  TimeFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: lambda_function.lambda_handler
+      Runtime: python3.8
+      CodeUri: 's3://paranbucket/app-helloworld-APICall.zip'
+      MemorySize: 256
+      Timeout: 15
+      Role: arn:aws:iam::681060310634:role/errorchecker-DisplayGradeFunctionRole-BM810WZAAD75
+
+
